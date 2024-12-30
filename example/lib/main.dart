@@ -79,10 +79,14 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
     }
     final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null) {
-      return renderBox.localToGlobal(Offset.zero);
+      // return renderBox.localToGlobal(Offset.zero);
+      Offset position = renderBox.localToGlobal(Offset.zero);
+    return Offset(position.dx, position.dy + 20) ;
     }
-    return Offset.zero;
+     return Offset.zero;
   }
+
+
 
   void _startAnimationSequence() async {
     for (int i = 0; i < positions.length; i++) {
@@ -177,7 +181,11 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
         Positioned(
           left: currentOffset.dx,
           top: currentOffset.dy,
-          child: Icon(Icons.star, size: 40, color: Colors.blue),
+          child: 
+          Container(
+            height: 50,
+            width: 50,
+            child: Image.asset("assets/animated_hand.png"),)
         ),
       ],
     );
