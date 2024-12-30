@@ -39,7 +39,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 3),
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -58,10 +58,14 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
       positions = [
         _getPositionFromKey(drawerKey),
         _getPositionFromKey(appBarKey),
-        _getPositionFromKey(bottomBarKey),
         _getPositionFromKey(fabKey),
         _getPositionFromKey(containerKey),
       ];
+
+      // Print the positions
+      for (int i = 0; i < positions.length; i++) {
+        print('Position of widget $i: ${positions[i]}');
+      }
     });
 
     if (positions.isNotEmpty) {
@@ -82,6 +86,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
 
   void _startAnimationSequence() async {
     for (int i = 0; i < positions.length; i++) {
+      print('Animating to position: ${positions[i]}'); // Print position being animated to
       _animateToPosition(positions[i]);
       await Future.delayed(_controller.duration!); // Wait for animation to complete
     }
@@ -102,45 +107,44 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        key: appBarKey,
-        title: Text('Widget Showcase'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_forward),
-            onPressed: () {},
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text('Widget Showcase'),
+            actions: [
+              IconButton(
+                key: appBarKey,
+                icon: Icon(Icons.arrow_forward),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.crop_square_sharp),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {},
+              ),
+            ],
           ),
-          IconButton(
-            icon: Icon(Icons.crop_square_sharp),
-            onPressed: () {},
+          drawer: Drawer(
+            key: drawerKey,
+            child: ListView(
+              children: [
+                DrawerHeader(child: Text('Drawer Content')),
+                ListTile(title: Text('Item 1')),
+              ],
+            ),
           ),
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {},
+          floatingActionButton: FloatingActionButton(
+            key: fabKey,
+            onPressed: () {
+              _getWidgetPositions();
+            },
+            child: Icon(Icons.play_arrow),
           ),
-        ],
-      ),
-      drawer: Drawer(
-        key: drawerKey,
-        child: ListView(
-          children: [
-            DrawerHeader(child: Text('Drawer Content')),
-            ListTile(title: Text('Item 1')),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        key: fabKey,
-        onPressed: () {
-          _getWidgetPositions();
-        },
-        child: Icon(Icons.play_arrow),
-      ),
-      body: Stack(
-        children: [
-          Container(
-            key: containerKey,
+          body: Container(
             height: 600,
             width: 400,
             decoration: BoxDecoration(
@@ -163,18 +167,19 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
             ),
             child: Center(
               child: TextButton(
+                key: containerKey,
                 child: Text("Start"),
                 onPressed: () {},
               ),
             ),
           ),
-          Positioned(
-            left: currentOffset.dx,
-            top: currentOffset.dy,
-            child: Icon(Icons.star, size: 40, color: Colors.blue),
-          ),
-        ],
-      ),
+        ),
+        Positioned(
+          left: currentOffset.dx,
+          top: currentOffset.dy,
+          child: Icon(Icons.star, size: 40, color: Colors.blue),
+        ),
+      ],
     );
   }
 }
