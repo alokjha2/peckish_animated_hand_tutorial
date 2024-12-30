@@ -1,60 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:peckish_animated_hand_tutorial/widgets/guiding_hand.dart';
+import 'package:peckish_animated_hand_tutorial/widgets/highlight_overlay.dart';
 
-// A simple animated hand widget
-class PeckishAnimatedHand extends StatefulWidget {
+class ShowcaseWidget extends StatefulWidget {
+  final List<ShowcaseStep> steps;  // List of steps to showcase
+  final VoidCallback onComplete;  // Callback when all steps are completed
+
+  const ShowcaseWidget({
+    Key? key,
+    required this.steps,
+    required this.onComplete,
+  }) : super(key: key);
+
   @override
-  _PeckishAnimatedHandState createState() => _PeckishAnimatedHandState();
+  _ShowcaseWidgetState createState() => _ShowcaseWidgetState();
 }
 
-class _PeckishAnimatedHandState extends State<PeckishAnimatedHand> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+class _ShowcaseWidgetState extends State<ShowcaseWidget> {
+  int _currentStep = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-
-    _animation = Tween<double>(begin: 0, end: 100).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
-
-    _controller.repeat(reverse: true); // Repeat the animation
+  void _nextStep() {
+    if (_currentStep < widget.steps.length - 1) {
+      setState(() {
+        _currentStep++;
+      });
+    } else {
+      widget.onComplete();  // Complete the tutorial after the last step
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Container(
-            height: 100,
-            width: 100,
-            color: Colors.blue,
-            alignment: Alignment.center,
-            child: Text(
-              'Hand: ${_animation.value.toStringAsFixed(2)}',
-              style: TextStyle(color: Colors.white),
-            ),
-          );
-        },
-      ),
-    );
-  }
+    if (_currentStep >= widget.steps.length) {
+      return SizedBox.shrink(); // Hide when completed
+    }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    final step = widget.steps[_currentStep];
+
+    return Stack(
+      children: [
+        HighlightOverlay(targetKey: step.key),  // Highlight the target widget
+        GuidingHand(
+          position: step.handPosition,
+          onTap: _nextStep,  // Move to the next step when tapped
+        ),
+        Positioned(
+          top: step.descriptionPosition.dy,
+          left: step.descriptionPosition.dx,
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            color: Colors.black.withOpacity(0.8),
+            child: Text(
+              step.description,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
-// A utility function that can be used in the main app or in the example
-String getGreeting() {
-  return 'Hello, Peckish World!';
+
+class ShowcaseStep {
+  final GlobalKey key;
+  final Offset handPosition;
+  final Offset descriptionPosition;
+  final String description;
+
+  ShowcaseStep({
+    required this.key,
+    required this.handPosition,
+    required this.descriptionPosition,
+    required this.description,
+  });
 }
