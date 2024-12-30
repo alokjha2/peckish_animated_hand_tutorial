@@ -19,8 +19,7 @@ class ShowcaseScreen extends StatefulWidget {
   _ShowcaseScreenState createState() => _ShowcaseScreenState();
 }
 
-class _ShowcaseScreenState extends State<ShowcaseScreen>
-    with SingleTickerProviderStateMixin {
+class _ShowcaseScreenState extends State<ShowcaseScreen> with SingleTickerProviderStateMixin {
   final GlobalKey drawerKey = GlobalKey();
   final GlobalKey appBarKey = GlobalKey();
   final GlobalKey bottomBarKey = GlobalKey();
@@ -29,7 +28,9 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
 
   Offset currentOffset = Offset.zero;
   List<Offset> positions = [];
-  int currentIndex = 0;
+  List<String> tooltips = ["Drawer Tooltip", "AppBar Tooltip", "FAB Tooltip", "Start Button Tooltip"];
+  bool showTooltip = false; // Track if tooltip should be shown
+  String currentTooltipText = ''; // Store the current tooltip text
 
   late AnimationController _controller;
   late Animation<Offset> _animation;
@@ -61,11 +62,6 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
         _getPositionFromKey(fabKey),
         _getPositionFromKey(containerKey),
       ];
-
-      // Print the positions
-      for (int i = 0; i < positions.length; i++) {
-        print('Position of widget $i: ${positions[i]}');
-      }
     });
 
     if (positions.isNotEmpty) {
@@ -79,30 +75,35 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
     }
     final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null) {
-      // return renderBox.localToGlobal(Offset.zero);
       Offset position = renderBox.localToGlobal(Offset.zero);
-    return Offset(position.dx, position.dy + 20) ;
+      return Offset(position.dx, position.dy + 20); // Adjust position if needed
     }
-     return Offset.zero;
+    return Offset.zero;
   }
-
-
 
   void _startAnimationSequence() async {
     for (int i = 0; i < positions.length; i++) {
-      print('Animating to position: ${positions[i]}'); // Print position being animated to
-      _animateToPosition(positions[i]);
+      _animateToPosition(positions[i], i);
       await Future.delayed(_controller.duration!); // Wait for animation to complete
     }
   }
 
-  void _animateToPosition(Offset targetOffset) {
+  void _animateToPosition(Offset targetOffset, int index) {
     final Offset startOffset = currentOffset;
     _animation = Tween<Offset>(begin: startOffset, end: targetOffset).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     )..addListener(() {
         setState(() {
           currentOffset = _animation.value;
+
+          // Check if the hand has reached the target position
+          double tolerance = 10.0; // Allow small tolerance for reaching the target
+          if ((currentOffset.dx - targetOffset.dx).abs() < tolerance && 
+              (currentOffset.dy - targetOffset.dy).abs() < tolerance) {
+            // If the hand is near the target position, show the tooltip
+            currentTooltipText = tooltips[index];
+            showTooltip = true;
+          }
         });
       });
 
@@ -181,12 +182,30 @@ class _ShowcaseScreenState extends State<ShowcaseScreen>
         Positioned(
           left: currentOffset.dx,
           top: currentOffset.dy,
-          child: 
-          Container(
+          child: Container(
             height: 50,
             width: 50,
-            child: Image.asset("assets/animated_hand.png"),)
+            child: Image.asset("assets/animated_hand.png"),
+          ),
         ),
+        if (showTooltip) // Show tooltip when condition is met
+          Positioned(
+            left: currentOffset.dx + 20,
+            top: currentOffset.dy + 60,  // Adjust position above hand
+            child: Container(
+              height: 30,
+              width: 160,
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                currentTooltipText,
+                style: TextStyle(color: Colors.black, fontSize: 10),
+              ),
+            ),
+          ),
       ],
     );
   }
