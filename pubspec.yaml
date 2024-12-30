@@ -1,7 +1,9 @@
 name: peckish_animated_hand_tutorial
-description: "A new Flutter package project."
-version: 0.0.1
-homepage:
+description: A package to guide users through tutorials with animated hands.
+version: 1.0.0
+homepage: https://github.com/alokjha2/peckish_animated_hand_tutorial
+repository: https://github.com/alokjha2/peckish_animated_hand_tutorial
+issue_tracker: https://github.com/alokjha2/peckish_animated_hand_tutorial/issues
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
