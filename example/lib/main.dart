@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-import 'package:flutter/material.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -22,49 +19,86 @@ class ShowcaseScreen extends StatefulWidget {
   _ShowcaseScreenState createState() => _ShowcaseScreenState();
 }
 
-class _ShowcaseScreenState extends State<ShowcaseScreen> {
+class _ShowcaseScreenState extends State<ShowcaseScreen>
+    with SingleTickerProviderStateMixin {
   final GlobalKey drawerKey = GlobalKey();
   final GlobalKey appBarKey = GlobalKey();
   final GlobalKey bottomBarKey = GlobalKey();
   final GlobalKey fabKey = GlobalKey();
   final GlobalKey containerKey = GlobalKey();
 
-  Offset drawerPosition = Offset.zero;
-  Offset appBarPosition = Offset.zero;
-  Offset bottomBarPosition = Offset.zero;
-  Offset fabPosition = Offset.zero;
-  Offset containerPosition = Offset.zero;
+  Offset currentOffset = Offset.zero;
+  List<Offset> positions = [];
+  int currentIndex = 0;
 
-@override
-void initState() {
-  super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    _getWidgetPositions();
-  });
-}
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
 
-void _getWidgetPositions() {
-  setState(() {
-    drawerPosition = _getPositionFromKey(drawerKey);
-    appBarPosition = _getPositionFromKey(appBarKey);
-    bottomBarPosition = _getPositionFromKey(bottomBarKey);
-    fabPosition = _getPositionFromKey(fabKey);
-    containerPosition = _getPositionFromKey(containerKey);
-  });
-}
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
 
-Offset _getPositionFromKey(GlobalKey key) {
-  if (key.currentContext == null) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getWidgetPositions();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _getWidgetPositions() {
+    setState(() {
+      positions = [
+        _getPositionFromKey(drawerKey),
+        _getPositionFromKey(appBarKey),
+        _getPositionFromKey(bottomBarKey),
+        _getPositionFromKey(fabKey),
+        _getPositionFromKey(containerKey),
+      ];
+    });
+
+    if (positions.isNotEmpty) {
+      _startAnimationSequence();
+    }
+  }
+
+  Offset _getPositionFromKey(GlobalKey key) {
+    if (key.currentContext == null) {
+      return Offset.zero;
+    }
+    final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      return renderBox.localToGlobal(Offset.zero);
+    }
     return Offset.zero;
   }
-  final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
-  if (renderBox != null) {
-    return renderBox.localToGlobal(Offset.zero);
+
+  void _startAnimationSequence() async {
+    for (int i = 0; i < positions.length; i++) {
+      _animateToPosition(positions[i]);
+      await Future.delayed(_controller.duration!); // Wait for animation to complete
+    }
   }
-  return Offset.zero;
-}
 
+  void _animateToPosition(Offset targetOffset) {
+    final Offset startOffset = currentOffset;
+    _animation = Tween<Offset>(begin: startOffset, end: targetOffset).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    )..addListener(() {
+        setState(() {
+          currentOffset = _animation.value;
+        });
+      });
 
+    _controller.forward(from: 0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +134,6 @@ Offset _getPositionFromKey(GlobalKey key) {
         key: fabKey,
         onPressed: () {
           _getWidgetPositions();
-          print('Drawer: $drawerPosition');
-          print('AppBar: $appBarPosition');
-          print('BottomBar: $bottomBarPosition');
-          print('FAB: $fabPosition');
-          print('Container: $containerPosition');
         },
         child: Icon(Icons.play_arrow),
       ),
@@ -140,40 +169,12 @@ Offset _getPositionFromKey(GlobalKey key) {
             ),
           ),
           Positioned(
-            key: bottomBarKey,
-            // bottom: 20,
-            // left: 20,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.clear),
-            ),
+            left: currentOffset.dx,
+            top: currentOffset.dy,
+            child: Icon(Icons.star, size: 40, color: Colors.blue),
           ),
         ],
       ),
     );
   }
 }
-
-
-      // Stack(
-      //   children: [
-      //     // Animated moving icon
-      //     AnimatedPositioned(
-      //       duration: Duration(seconds: 1),
-      //       left: positions[_currentStep].dx,
-      //       top: positions[_currentStep].dy,
-      //       child: Icon(Icons.star, size: 40, color: Colors.blue),
-      //     ),
-      //     // The container with the target widget
-      //     Positioned(
-      //       left: 150,
-      //       top: 400,
-      //       child: Container(
-      //         width: 100,
-      //         height: 100,
-      //         color: Colors.amber,
-      //         child: Center(child: Icon(Icons.home, size: 40)),
-      //       ),
-      //     ),
-      //   ],
-      // ),
