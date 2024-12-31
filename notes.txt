@@ -5,6 +5,12 @@ git branch -M main
 git remote add origin https://github.com/alokjha2/peckish_animated_hand_tutorial.git
 git push -u origin main
 
+how to deploy package
+1. merge code to main branch
+2. change pubpsec yaml version 
+3. add change log md 
+4. 
+
 flutter pub publish --dry-run
 
 flutter pub publish
