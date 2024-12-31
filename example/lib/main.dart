@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
+// import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
 // import 'package:peckish_animated_hand_tutorial/src/tooltipclass.dart'; // Fixed casing
 // import 'package:peckish_animated_hand_tutorial/src/enum.dart';
 // import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_model.dart';
-// import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_textstyle.dart';
+// import 'package:peckish_animated_hand_tutorial/export.dart';
+import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -27,22 +29,18 @@ class ShowcaseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ShowcaseTutorial(
-        // toolTip: ToolTip(
-        //   toolTipMessage: '',
-        //   // Add other ToolTip properties as needed
-        //   // toolTipStyle: ToolTipStyle(),
-        //   // toolTipTextStyle: ToolTipTextStyle(),
-        // ),
         haveRippleEffect: true,
         handColor: Colors.orange,
         items: [
           ShowcaseItem(
+
             key: buttonKey,
-            tooltip: "Click this button to start",
+            tooltip: ToolTip(toolTipMessage: "button"),
           ),
           ShowcaseItem(
             key: menuKey,
-            tooltip: "Access menu options here",
+            tooltip: ToolTip(toolTipMessage: "drawer"),
+            // tooltip: "Access menu options here",
           ),
         ],
         child: Scaffold(

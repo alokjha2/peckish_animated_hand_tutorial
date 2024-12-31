@@ -1,70 +1,19 @@
 // File: lib/showcase_tutorial.dart
-library showcase_tutorial;
+// library showcase_tutorial;
 
 import 'package:flutter/material.dart';
+import 'package:peckish_animated_hand_tutorial/showcaseController.dart';
 import 'package:peckish_animated_hand_tutorial/src/show_case_model.dart';
 import 'package:peckish_animated_hand_tutorial/src/toolTipclass.dart';
-
+import 'package:peckish_animated_hand_tutorial/src/tooltipwidget.dart';
 export 'src/show_case_model.dart';
 export 'src/toolTipClass.dart';
 // export 'src/tooltip.dart';
 
 
 
-enum RippleEffectType {
-  Touch, 
 
-}
 
-class ShowcaseController extends ChangeNotifier {
-  final List<ShowcaseItem> _items = [];
-  bool _isPlaying = false;
-  int _currentIndex = 0;
-  Offset _currentOffset = Offset.zero;
-  bool _showTooltip = false;
-  
-  List<ShowcaseItem> get items => _items;
-  bool get isPlaying => _isPlaying;
-  Offset get currentOffset => _currentOffset;
-  bool get showTooltip => _showTooltip;
-  String get currentTooltip => _currentIndex < _items.length ? _items[_currentIndex].tooltip : '';
-  
-  void addItem(ShowcaseItem item) {
-    _items.add(item);
-    notifyListeners();
-  }
-  
-  void setItems(List<ShowcaseItem> items) {
-    _items
-      ..clear()
-      ..addAll(items);
-    notifyListeners();
-  }
-  
-  void updateOffset(Offset offset) {
-    _currentOffset = offset;
-    notifyListeners();
-  }
-  
-  void setShowTooltip(bool show) {
-    _showTooltip = show;
-    notifyListeners();
-  }
-  
-  void next() {
-    if (_currentIndex < _items.length - 1) {
-      _currentIndex++;
-      notifyListeners();
-    }
-  }
-  
-  void reset() {
-    _currentIndex = 0;
-    _showTooltip = false;
-    _currentOffset = Offset.zero;
-    notifyListeners();
-  }
-}
 
 
 
@@ -245,23 +194,14 @@ class _ShowcaseTutorialState extends State<ShowcaseTutorial> with TickerProvider
                   ],
                 ),
               ),
-              if (_controller.showTooltip)
-                Positioned(
-                  left: _controller.currentOffset.dx + 20,
-                  top: _controller.currentOffset.dy + 60,
-                  child: widget.tooltipBuilder?.call(_controller.currentTooltip) ??
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          _controller.currentTooltip,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                ),
+             if (_controller.showTooltip)
+  Positioned(
+    left: _controller.currentOffset.dx + 20,
+    top: _controller.currentOffset.dy + 60,
+    child: widget.tooltipBuilder?.call(_controller.currentTooltip.toolTipMessage!) ??
+        ToolTipWidget(toolTip: _controller.currentTooltip),
+  ),
+
             ],
           ),
         ),
