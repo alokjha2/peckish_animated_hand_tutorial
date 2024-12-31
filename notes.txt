@@ -5,6 +5,10 @@ git branch -M main
 git remote add origin https://github.com/alokjha2/peckish_animated_hand_tutorial.git
 git push -u origin main
 
+git commands 
+git pull origin main 
+
+
 how to deploy package
 1. merge code to main branch
 2. change pubpsec yaml version 
