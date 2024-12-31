@@ -8,6 +8,8 @@ import 'package:peckish_animated_hand_tutorial/src/toolTipclass.dart';
 import 'package:peckish_animated_hand_tutorial/src/tooltipwidget.dart';
 export 'src/show_case_model.dart';
 export 'src/toolTipClass.dart';
+export 'src/models/tool_tip_style.dart';
+export 'src/models/tool_tip_textstyle.dart';
 // export 'src/tooltip.dart';
 
 

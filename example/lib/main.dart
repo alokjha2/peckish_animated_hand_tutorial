@@ -30,7 +30,7 @@ class ShowcaseScreen extends StatelessWidget {
     return Scaffold(
       body: ShowcaseTutorial(
         haveRippleEffect: true,
-        handColor: Colors.orange,
+        handColor: Colors.blue,
         items: [
           ShowcaseItem(
 
@@ -39,7 +39,7 @@ class ShowcaseScreen extends StatelessWidget {
           ),
           ShowcaseItem(
             key: menuKey,
-            tooltip: ToolTip(toolTipMessage: "drawer"),
+            tooltip: ToolTip(toolTipMessage: "drawer", toolTipStyle: ToolTipStyle()),
             // tooltip: "Access menu options here",
           ),
         ],

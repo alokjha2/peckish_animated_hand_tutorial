@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
 import 'package:peckish_animated_hand_tutorial/src/enum.dart';
-import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_model.dart';
+// import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_model.dart';
 import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_textstyle.dart';
 // import 'package:peckish_animated_hand_tutorial/src/toolTipclass.dart';
 

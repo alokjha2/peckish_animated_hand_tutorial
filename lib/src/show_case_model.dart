@@ -5,14 +5,14 @@ import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.da
 class ShowcaseItem {
   final GlobalKey key;
   final ToolTip? tooltip;
-  final Alignment? handPosition;
+  final Alignment? handAlignment;
   // final Widget? tooltipWidget;
 
   
   ShowcaseItem({
     required this.key,
     this.tooltip,
-    this.handPosition,
+    this.handAlignment,
     // this.tooltipWidget,
   });
 }
