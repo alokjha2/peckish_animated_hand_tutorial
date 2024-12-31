@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 class ShowcaseItem {
   final GlobalKey key;
   final String tooltip;
-  final Widget? tooltipWidget;
+  final Alignment? handPosition;
+  // final Widget? tooltipWidget;
+
   
   ShowcaseItem({
     required this.key,
     required this.tooltip,
-    this.tooltipWidget,
+    this.handPosition,
+    // this.tooltipWidget,
   });
 }
