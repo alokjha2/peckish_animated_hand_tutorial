@@ -1,10 +1,4 @@
-library peckish_animated_hand_tutorial;
-
-import 'package:flutter/material.dart';
-import 'package:peckish_animated_hand_tutorial/src/enum.dart';
-import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_style.dart';
-// import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_model.dart';
-import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_textstyle.dart';
+import 'export_models.dart';
 
 class ToolTip {
   final String? toolTipMessage; 

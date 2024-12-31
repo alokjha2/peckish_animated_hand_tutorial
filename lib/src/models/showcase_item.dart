@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
 
+import 'export_models.dart';
 
 class ShowcaseItem {
   final GlobalKey key;

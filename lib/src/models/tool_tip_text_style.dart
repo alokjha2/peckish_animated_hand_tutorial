@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 
+import 'export_models.dart';
 class ToolTipTextStyle {
   final Color fontColor;
   final EdgeInsets padding;

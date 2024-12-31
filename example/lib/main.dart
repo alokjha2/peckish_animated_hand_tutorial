@@ -39,7 +39,9 @@ class ShowcaseScreen extends StatelessWidget {
           ),
           ShowcaseItem(
             key: menuKey,
-            tooltip: ToolTip(toolTipMessage: "drawer", toolTipStyle: ToolTipStyle()),
+            tooltip: ToolTip(
+              toolTipType: ToolTipType.bubble,
+              toolTipMessage: "drawer", toolTipStyle: ToolTipStyle()),
             // tooltip: "Access menu options here",
           ),
         ],

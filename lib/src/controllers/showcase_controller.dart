@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
-
-// import 'src/toolTipclass.dart';
+import "export_controllers.dart";
 
 class ShowcaseController extends ChangeNotifier {
   final List<ShowcaseItem> _items = [];

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'export_models.dart';
 
 class ToolTipStyle {
   final Color backgroundColor;
