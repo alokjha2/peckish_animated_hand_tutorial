@@ -1,25 +1,15 @@
 // File: lib/showcase_tutorial.dart
 library showcase_tutorial;
 
+import 'package:flutter/material.dart';
+import 'package:peckish_animated_hand_tutorial/src/show_case_model.dart';
+
 // export 'src/showcase_controller.dart';
 // export 'src/showcase_widget.dart';
-// export 'src/models/showcase_item.dart';
+export 'src/show_case_model.dart';
 
 // File: lib/src/models/showcase_item.dart
-import 'package:flutter/material.dart';
 
-
-class ShowcaseItem {
-  final GlobalKey key;
-  final String tooltip;
-  final Widget? tooltipWidget;
-  
-  ShowcaseItem({
-    required this.key,
-    required this.tooltip,
-    this.tooltipWidget,
-  });
-}
 
 // File: lib/src/showcase_controller.dart
 
@@ -189,9 +179,11 @@ class _ShowcaseTutorialState extends State<ShowcaseTutorial> with SingleTickerPr
                 child: Container(
                   height: 50,
                   width: 50,
-                  child: widget.handAssetPath != null
+                  child: 
+                  
+                  widget.handAssetPath != null
                     ? Image.asset(widget.handAssetPath!)
-                    : Icon(Icons.touch_app, size: 30),
+                    : Image.asset("assets/animated_hand.png")
                 ),
               ),
               if (_controller.showTooltip)

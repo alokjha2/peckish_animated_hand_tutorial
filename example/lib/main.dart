@@ -23,6 +23,7 @@ class ShowcaseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ShowcaseTutorial(
+        // handAssetPath: "assets/animated_hand.png",
         items: [
           ShowcaseItem(
             key: buttonKey,
