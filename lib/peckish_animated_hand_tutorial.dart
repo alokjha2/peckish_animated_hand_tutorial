@@ -74,6 +74,7 @@ class ShowcaseTutorial extends StatefulWidget {
   final ShowcaseController? controller;
   final Duration animationDuration;
   final String? handAssetPath;
+  final Color? handColor;
   final Widget Function(String tooltip)? tooltipBuilder;
   
   ShowcaseTutorial({
@@ -81,6 +82,7 @@ class ShowcaseTutorial extends StatefulWidget {
     required this.child,
     required this.items,
     this.controller,
+    this.handColor = Colors.white,
     this.animationDuration = const Duration(seconds: 3),
     this.handAssetPath,
     this.tooltipBuilder,
@@ -181,9 +183,14 @@ class _ShowcaseTutorialState extends State<ShowcaseTutorial> with SingleTickerPr
                   width: 50,
                   child: 
                   
-                  widget.handAssetPath != null
-                    ? Image.asset(widget.handAssetPath!)
-                    : Image.asset("assets/animated_hand.png")
+                  // widget.handAssetPath != null
+                  //   ? Image.asset(widget.handAssetPath!)
+                    // : 
+                    Image.asset(
+                      "assets/animated_hand.png",
+                      color: widget.handColor, // Change to your desired color
+                      colorBlendMode: BlendMode.modulate,
+                      )
                 ),
               ),
               if (_controller.showTooltip)
