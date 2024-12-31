@@ -28,9 +28,9 @@ class ShowcaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ShowcaseTutorial(
+      body: PeckishHandTutorial(
         haveRippleEffect: true,
-        handColor: Colors.blue,
+        handColor: Colors.green,
         items: [
           ShowcaseItem(
 
@@ -42,7 +42,6 @@ class ShowcaseScreen extends StatelessWidget {
             tooltip: ToolTip(
               toolTipType: ToolTipType.bubble,
               toolTipMessage: "drawer", toolTipStyle: ToolTipStyle()),
-            // tooltip: "Access menu options here",
           ),
         ],
         child: Scaffold(

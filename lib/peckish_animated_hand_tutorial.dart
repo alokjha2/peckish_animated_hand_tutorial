@@ -1,11 +1,7 @@
 import 'export.dart';
 export "export.dart";
 
-
-
-
-
-class ShowcaseTutorial extends StatefulWidget {
+class PeckishHandTutorial extends StatefulWidget {
   final Widget child;
   final List<ShowcaseItem> items;
   final ShowcaseController? controller;
@@ -21,7 +17,7 @@ class ShowcaseTutorial extends StatefulWidget {
   // final ToolTip? 
   final Widget Function(String tooltip)? tooltipBuilder;
   
-  ShowcaseTutorial({
+  PeckishHandTutorial({
     Key? key,
     required this.child,
     required this.items,
@@ -39,10 +35,10 @@ class ShowcaseTutorial extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ShowcaseTutorialState createState() => _ShowcaseTutorialState();
+  _PeckishHandTutorialState createState() => _PeckishHandTutorialState();
 }
 
-class _ShowcaseTutorialState extends State<ShowcaseTutorial> with TickerProviderStateMixin {
+class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerProviderStateMixin {
   late ShowcaseController _controller;
   late AnimationController _animationController;
   late Animation<Offset> _animation;
