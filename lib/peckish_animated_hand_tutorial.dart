@@ -3,15 +3,18 @@ library showcase_tutorial;
 
 import 'package:flutter/material.dart';
 import 'package:peckish_animated_hand_tutorial/src/show_case_model.dart';
+import 'package:peckish_animated_hand_tutorial/src/toolTipclass.dart';
 
-// export 'src/showcase_controller.dart';
-// export 'src/showcase_widget.dart';
 export 'src/show_case_model.dart';
+export 'src/toolTipClass.dart';
+// export 'src/tooltip.dart';
 
-// File: lib/src/models/showcase_item.dart
 
 
-// File: lib/src/showcase_controller.dart
+enum RippleEffectType {
+  Touch, 
+
+}
 
 class ShowcaseController extends ChangeNotifier {
   final List<ShowcaseItem> _items = [];
@@ -77,6 +80,8 @@ class ShowcaseTutorial extends StatefulWidget {
   final bool? haveRippleEffect;
   final Function? onAnimationComplete;
   final Function? triggerWhen;
+  final ToolTip toolTip;
+  // final ToolTip? 
   final Widget Function(String tooltip)? tooltipBuilder;
   
   ShowcaseTutorial({
@@ -88,6 +93,7 @@ class ShowcaseTutorial extends StatefulWidget {
     this.handColor = Colors.white,
     this.animationDuration = const Duration(seconds: 3),
     this.handAssetPath,
+    this.toolTip = const ToolTip(),
     this.initialDelay,
     this.onAnimationComplete,
     this.tooltipBuilder,

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
+// import 'package:peckish_animated_hand_tutorial/src/tooltipclass.dart'; // Fixed casing
+// import 'package:peckish_animated_hand_tutorial/src/enum.dart';
+// import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_model.dart';
+// import 'package:peckish_animated_hand_tutorial/src/models/tool_tip_textstyle.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,8 +27,14 @@ class ShowcaseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ShowcaseTutorial(
+        // toolTip: ToolTip(
+        //   toolTipMessage: '',
+        //   // Add other ToolTip properties as needed
+        //   // toolTipStyle: ToolTipStyle(),
+        //   // toolTipTextStyle: ToolTipTextStyle(),
+        // ),
         haveRippleEffect: true,
-        // handAssetPath: "assets/animated_hand.png",
+        handColor: Colors.orange,
         items: [
           ShowcaseItem(
             key: buttonKey,
@@ -57,3 +67,4 @@ class ShowcaseScreen extends StatelessWidget {
     );
   }
 }
+
