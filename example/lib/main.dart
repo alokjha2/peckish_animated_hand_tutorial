@@ -9,12 +9,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ShowcaseScreen(),
+      home: HomeScreen(),
     );
   }
 }
 
-class ShowcaseScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   final GlobalKey buttonKey = GlobalKey();
   final GlobalKey menuKey = GlobalKey();
 

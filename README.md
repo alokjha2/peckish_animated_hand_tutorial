@@ -8,6 +8,11 @@
 
 </p>
 
+## Table of Contents
+
+1. [](#)
+1. [](#)
+
 
 ```dart
 CustomMaterialIndicator(
@@ -28,7 +33,7 @@ CustomMaterialIndicator(
 
 ### Parameters 
 
-### Peckish Hand Tutorial
+### Properties of `Peckish Hand Tutorial` : 
 | Parameter            | Description                                                                                                                                  |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | `child`              | The widget that will be wrapped by the tutorial. It can be any widget that you want to show the tutorial for.                               |
@@ -79,12 +84,12 @@ CustomMaterialIndicator(
 | `toolTipAlignment`  | Defines the alignment of the tooltip relative to its target.     |
 | `toolTipTextStyle`  | Defines the text style (e.g., font size, color) for the tooltip message. |
 
-5. ToolTip Touch Type
+### ToolTip Touch Type
 | Touch Type         | Description                                                      | Preview                                                                 |
 |---------------------|------------------------------------------------------------------|-------------------------------------------------------------------------|
 | `Touch`             | Represents the ripple effect triggered by touch interaction.     | ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demoworm.gif?raw=true) |
 
-6. ToolTip Type
+### ToolTip Type
 | ToolTip Type   | Preview                                                    |
 |-------------|-------------------------------------------------------------------|
 | `bubble`    |  ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)                  |
