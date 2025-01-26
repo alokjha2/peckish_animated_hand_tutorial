@@ -60,10 +60,25 @@ CustomMaterialIndicator(
 | `padding`            | The padding inside the tooltip.                                              |
 | `enableBorder`       | A boolean that enables or disables the border around the tooltip.            |
 
+| Parameter           | Description                                                       |
+|---------------------|-------------------------------------------------------------------|
+| `toolTipMessage`    | A message displayed within the tooltip.                           |
+| `toolTipType`       | Defines the type of tooltip (e.g., `bubble`, `simple`).           |
+| `onTooltipTap`      | A function that is triggered when the tooltip is tapped.          |
+| `toolTipStyle`      | Defines the style (e.g., background color, padding) of the tooltip. |
+| `toolTipAlignment`  | Defines the alignment of the tooltip relative to its target.     |
+| `toolTipTextStyle`  | Defines the text style (e.g., font size, color) for the tooltip message. |
+
+| Parameter           | Description                                                      | Preview |
+|---------------------|--------------------------------------------| ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demoworm.gif?raw=true) |
+| `Touch`             | Represents the ripple effect triggered by touch interaction.| |
+
+
 | ToolTip Type   | Preview                                                    |
 |-------------|-------------------------------------------------------------------|
 | `bubble`    |  ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)                  |
 | `simple`    |   ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)           |
+
 
 
 ## Additional information
