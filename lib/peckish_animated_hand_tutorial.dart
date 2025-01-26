@@ -12,13 +12,13 @@ class PeckishHandTutorial extends StatefulWidget {
   final Color? handColor;
   final bool? haveRippleEffect;
   final Function? onAnimationComplete;
-   final Function(Function)? triggerWhen;
+  final Function(Function)? triggerWhen;
   final Alignment? initialAlignment;
   final bool? initiallyHide;
 
   final ToolTip toolTip;
   final Widget Function(String tooltip)? tooltipBuilder;
-  
+
   PeckishHandTutorial({
     Key? key,
     required this.child,
@@ -36,11 +36,16 @@ class PeckishHandTutorial extends StatefulWidget {
     this.haveRippleEffect = false,
     this.initiallyHide = false,
     this.initialAlignment = Alignment.bottomRight,
-  }) : super(key: key);
+  }) : assert(
+          !(initiallyHide == true && triggerWhen == null),
+          'triggerWhen must be provided when initiallyHide is true.',
+        ),
+        super(key: key);
 
   @override
   _PeckishHandTutorialState createState() => _PeckishHandTutorialState();
 }
+
 
 class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerProviderStateMixin {
   late ShowcaseController _controller;
@@ -96,15 +101,6 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
    widget.triggerWhen?.call(() {
       _startTutorial();
     });
-  // }
-
-    // Allow `triggerWhen` to start the tutorial dynamically
-    // widget.triggerWhen?.call(() {
-    //   if (!_isTutorialActive) {
-    //     _startTutorial();
-    //   }
-    // });
-  // }
   }
 
   
