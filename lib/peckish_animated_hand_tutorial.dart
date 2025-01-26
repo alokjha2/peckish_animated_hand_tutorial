@@ -207,13 +207,12 @@ Future<void> _animateToPosition(Offset targetOffset) async {
       }
     });
   await _animationController.forward(from: 0);
-  // Logger().wtf("completed!");
 }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    print('Screen Size: $screenSize');
+   
 
     return Material(
       child: Stack(
@@ -271,8 +270,12 @@ Future<void> _animateToPosition(Offset targetOffset) async {
     screenSize,
     widget.handSize!,
   ).dy,
-  child: widget.tooltipBuilder?.call(_controller.currentTooltip.toolTipMessage!) ?? 
-         ToolTipWidget(toolTip: _controller.currentTooltip),
+  child: () {
+    Logger().wtf("Current Tooltip Type: ${_controller.currentTooltip.toolTipType}");
+    
+    return widget.tooltipBuilder?.call(_controller.currentTooltip.toolTipMessage!) ?? 
+           ToolTipWidget(toolTip: _controller.currentTooltip);
+  }(),
 ),
 
       

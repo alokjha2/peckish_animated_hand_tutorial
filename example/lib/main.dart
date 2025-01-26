@@ -59,13 +59,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ShowcaseItem(
 
             key: buttonKey,
-            tooltip: const ToolTip(toolTipMessage: "button"),
+            tooltip: const ToolTip(toolTipMessage: "button", toolTipType: ToolTipType.cloud),
           ),
           ShowcaseItem(
             key: menuKey,
             tooltip: const ToolTip(
               toolTipType: ToolTipType.bubble,
-              toolTipMessage: "drawer", toolTipStyle: ToolTipStyle()),
+              toolTipMessage: "drawer", toolTipStyle: ToolTipStyle(backgroundColor: Colors.green)),
           ),
         ],
         child: Scaffold(

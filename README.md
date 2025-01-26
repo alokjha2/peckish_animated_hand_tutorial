@@ -110,6 +110,23 @@ TODO: Reach out to peckish human in case of any query regarding package or impro
   </tr>
 </table>
 
+2. Commit statements guideline : 
+- Bug Fixes
+Commit Statement: fix: resolve issue with user login
 
-## License
+- Feature Added
+Commit Statement: feat: add user profile page
+
+- Refactoring Existing Code
+Commit Statement: refactor: simplify user authentication logic
+
+- Updating Documentation
+Commit Statement: docs: update README with installation instructions
+
+- Performance Improvements
+Commit Statement: perf: optimize image loading for faster rendering
+
+- Chore (Non-Feature Changes)
+Commit Statement: chore: update dependencies to latest versions
+
 
