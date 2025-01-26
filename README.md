@@ -27,7 +27,8 @@ CustomMaterialIndicator(
 ```
 
 ### Parameters 
-1. Peckish Hand Tutorial
+
+### Peckish Hand Tutorial
 | Parameter            | Description                                                                                                                                  |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | `child`              | The widget that will be wrapped by the tutorial. It can be any widget that you want to show the tutorial for.                               |
@@ -44,7 +45,7 @@ CustomMaterialIndicator(
 | `toolTip`            | The tooltip configuration to display in the tutorial. Defaults to an empty tooltip.                                                          |
 | `tooltipBuilder`     | An optional custom builder for the tooltip, which takes a string as an argument and returns a widget.                                         |
 
-2. Showcase Item
+### Showcase Item
 | Parameter            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
 | `key`                | A unique key used to identify each showcase item in the tutorial.           |
@@ -53,14 +54,14 @@ CustomMaterialIndicator(
 | `handAlignment`      | The alignment for the hand when pointing to the showcase item.              |
 | `onAnimationComplete`| A callback function that is triggered when the animation for this showcase item is complete. |
 
-3. ToolTip TextStyle
+### ToolTip TextStyle
 | Parameter            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
 | `fontColor`          | The color of the text inside the tooltip. Defaults to black.                |
 | `fontSize`           | The font size of the text inside the tooltip. Defaults to 14.0.             |
 | `padding`            | The padding inside the tooltip around the text. Defaults to `EdgeInsets.all(8.0)`. |
 
-# ToolTip Style
+### ToolTip Style
 | Parameter            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
 | `backgroundColor`    | The background color of the tooltip.                                         |
