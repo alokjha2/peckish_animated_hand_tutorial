@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PeckishHandTutorial(
+      initialAlignment: Alignment.topCenter,
         toolTip: const ToolTip(
           toolTipType: ToolTipType.bubble,
           toolTipMessage: "This is a button",

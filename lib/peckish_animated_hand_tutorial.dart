@@ -92,6 +92,14 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
   void _triggerRipple() {
     _rippleController.forward(from: 0);
   }
+
+Offset _clampToBounds(Offset offset, Size screenSize, double handSize) {
+  final clampedX = offset.dx.clamp(0.0, screenSize.width - handSize*1.3);
+  final clampedY = offset.dy.clamp(0.0, screenSize.height - handSize*1.5);
+  return Offset(clampedX, clampedY);
+}
+
+
   Offset _getOffsetFromAlignment(Alignment alignment, Size screenSize) {
   final dx = (alignment.x + 1) / 2 * screenSize.width;
   final dy = (alignment.y + 1) / 2 * screenSize.height;
@@ -104,19 +112,34 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
     _startAnimationSequence();
   }
 
-  Offset _getPositionFromKey(GlobalKey key) {
-    final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox == null) return Offset.zero;
+Offset _getPositionFromKey(GlobalKey key) {
+  final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
+  if (renderBox == null) return Offset.zero;
 
-    final position = renderBox.localToGlobal(Offset.zero);
-    return Offset(position.dx, position.dy + 20);
-  }
+  final position = renderBox.localToGlobal(Offset.zero);
+  final handSize = widget.handSize ?? 50.0;
+
+  // Ensure the position is clamped within screen bounds
+  final screenSize = MediaQuery.of(context).size;
+  return _clampToBounds(
+    Offset(position.dx, position.dy + 20), // Adjust for padding
+    screenSize,
+    handSize,
+  );
+}
+
 
 void _startAnimationSequence() async {
   final screenSize = MediaQuery.of(context).size;
-  final initialPosition = _getOffsetFromAlignment(widget.initialAlignment!, screenSize);
+  final handSize = widget.handSize ?? 50.0;
 
-  _controller.updateOffset(initialPosition); // Set the initial position
+  final initialPosition = _clampToBounds(
+    _getOffsetFromAlignment(widget.initialAlignment!, screenSize),
+    screenSize,
+    handSize,
+  );
+
+  _controller.updateOffset(initialPosition); 
 
   for (int i = 0; i < _controller.items.length; i++) {
     final targetOffset = _getPositionFromKey(_controller.items[i].key);
@@ -127,31 +150,40 @@ void _startAnimationSequence() async {
 }
 
 
-  Future<void> _animateToPosition(Offset targetOffset) async {
-    final startOffset = _controller.currentOffset;
-    _animation = Tween<Offset>(
-      begin: startOffset,
-      end: targetOffset,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
-    )..addListener(() {
+
+Future<void> _animateToPosition(Offset targetOffset) async {
+  final screenSize = MediaQuery.of(context).size;
+  final handSize = widget.handSize ?? 50.0;
+
+  final startOffset = _controller.currentOffset;
+  final clampedTargetOffset = _clampToBounds(targetOffset, screenSize, handSize);
+
+  _animation = Tween<Offset>(
+    begin: startOffset,
+    end: clampedTargetOffset,
+  ).animate(
+    CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ),
+  )..addListener(() {
       _controller.updateOffset(_animation.value);
 
       const tolerance = 10.0;
-      if ((_animation.value.dx - targetOffset.dx).abs() < tolerance &&
-          (_animation.value.dy - targetOffset.dy).abs() < tolerance) {
+      if ((_animation.value.dx - clampedTargetOffset.dx).abs() < tolerance &&
+          (_animation.value.dy - clampedTargetOffset.dy).abs() < tolerance) {
         _controller.setShowTooltip(true);
       }
     });
 
-    await _animationController.forward(from: 0);
-  }
+  await _animationController.forward(from: 0);
+}
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    print('Screen Size: $screenSize');
+
     return Material(
       child: Stack(
         children: [
@@ -196,12 +228,21 @@ void _startAnimationSequence() async {
                   ),
                 ),
                if (_controller.showTooltip)
-        Positioned(
-      left: _controller.currentOffset.dx + 20,
-      top: _controller.currentOffset.dy + 60,
-      child: widget.tooltipBuilder?.call(_controller.currentTooltip.toolTipMessage!) ??
-          ToolTipWidget(toolTip: _controller.currentTooltip),
-        ),
+     Positioned(
+  left: _clampToBounds(
+    Offset(_controller.currentOffset.dx + 20, 0),
+    screenSize,
+    widget.handSize!,
+  ).dx,
+  top: _clampToBounds(
+    Offset(0, _controller.currentOffset.dy + 60),
+    screenSize,
+    widget.handSize!,
+  ).dy,
+  child: widget.tooltipBuilder?.call(_controller.currentTooltip.toolTipMessage!) ?? 
+         ToolTipWidget(toolTip: _controller.currentTooltip),
+),
+
       
               ],
             ),
