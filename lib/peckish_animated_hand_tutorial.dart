@@ -13,6 +13,8 @@ class PeckishHandTutorial extends StatefulWidget {
   final bool? haveRippleEffect;
   final Function? onAnimationComplete;
   final Function? triggerWhen;
+  final Alignment? initialAlignment;
+
   final ToolTip toolTip;
   final Widget Function(String tooltip)? tooltipBuilder;
   
@@ -31,6 +33,7 @@ class PeckishHandTutorial extends StatefulWidget {
     this.tooltipBuilder,
     this.triggerWhen,
     this.haveRippleEffect = false,
+    this.initialAlignment = Alignment.bottomRight,
   }) : super(key: key);
 
   @override
@@ -63,7 +66,7 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
     );
 
     // Ripple effect animations
-    _rippleSizeAnimation = Tween<double>(begin: 0, end: 90).animate(
+    _rippleSizeAnimation = Tween<double>(begin: 1, end: 90).animate(
       CurvedAnimation(parent: _rippleController, curve: Curves.easeOut),
     );
 
@@ -89,6 +92,12 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
   void _triggerRipple() {
     _rippleController.forward(from: 0);
   }
+  Offset _getOffsetFromAlignment(Alignment alignment, Size screenSize) {
+  final dx = (alignment.x + 1) / 2 * screenSize.width;
+  final dy = (alignment.y + 1) / 2 * screenSize.height;
+  return Offset(dx, dy);
+}
+
 
   void _getWidgetPositions() {
     if (_controller.items.isEmpty) return;
@@ -103,14 +112,20 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
     return Offset(position.dx, position.dy + 20);
   }
 
-  void _startAnimationSequence() async {
-    for (int i = 0; i < _controller.items.length; i++) {
-      final targetOffset = _getPositionFromKey(_controller.items[i].key);
-      await _animateToPosition(targetOffset);
-      _triggerRipple();
-      await Future.delayed(_animationController.duration!);
-    }
+void _startAnimationSequence() async {
+  final screenSize = MediaQuery.of(context).size;
+  final initialPosition = _getOffsetFromAlignment(widget.initialAlignment!, screenSize);
+
+  _controller.updateOffset(initialPosition); // Set the initial position
+
+  for (int i = 0; i < _controller.items.length; i++) {
+    final targetOffset = _getPositionFromKey(_controller.items[i].key);
+    await _animateToPosition(targetOffset);
+    _triggerRipple();
+    await Future.delayed(_animationController.duration!);
   }
+}
+
 
   Future<void> _animateToPosition(Offset targetOffset) async {
     final startOffset = _controller.currentOffset;
