@@ -12,8 +12,9 @@ class PeckishHandTutorial extends StatefulWidget {
   final Color? handColor;
   final bool? haveRippleEffect;
   final Function? onAnimationComplete;
-  final Function? triggerWhen;
+   final Function(Function)? triggerWhen;
   final Alignment? initialAlignment;
+  final bool? initiallyHide;
 
   final ToolTip toolTip;
   final Widget Function(String tooltip)? tooltipBuilder;
@@ -33,6 +34,7 @@ class PeckishHandTutorial extends StatefulWidget {
     this.tooltipBuilder,
     this.triggerWhen,
     this.haveRippleEffect = false,
+    this.initiallyHide = false,
     this.initialAlignment = Alignment.bottomRight,
   }) : super(key: key);
 
@@ -47,6 +49,7 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
   late AnimationController _rippleController;
   late Animation<double> _rippleSizeAnimation;
   late Animation<double> _rippleOpacityAnimation;
+   bool _isTutorialActive = false;
 
   @override
   void initState() {
@@ -74,10 +77,37 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
       CurvedAnimation(parent: _rippleController, curve: Curves.easeOut),
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getWidgetPositions();
+    
+
+  void _startTutorial() {
+    if (_isTutorialActive) return;
+    setState(() {
+      _isTutorialActive = true;
     });
+    _getWidgetPositions();
   }
+
+    if (!widget.initiallyHide!) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _startTutorial();
+      });
+    }
+
+   widget.triggerWhen?.call(() {
+      _startTutorial();
+    });
+  // }
+
+    // Allow `triggerWhen` to start the tutorial dynamically
+    // widget.triggerWhen?.call(() {
+    //   if (!_isTutorialActive) {
+    //     _startTutorial();
+    //   }
+    // });
+  // }
+  }
+
+  
 
   @override
   void dispose() {
@@ -188,6 +218,7 @@ Future<void> _animateToPosition(Offset targetOffset) async {
       child: Stack(
         children: [
           widget.child,
+          if (_isTutorialActive)
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) => Stack(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:peckish_animated_hand_tutorial/peckish_animated_hand_tutorial.dart';
 
 void main() {
@@ -14,13 +16,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey buttonKey = GlobalKey();
+
   final GlobalKey menuKey = GlobalKey();
+   late Function? triggerTutorial;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 10), () {
+      if (triggerTutorial != null) {
+        triggerTutorial!();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return PeckishHandTutorial(
+      initiallyHide: true,
+triggerWhen: (trigger) {
+         triggerTutorial = trigger;
+      },
       initialAlignment: Alignment.topCenter,
         toolTip: const ToolTip(
           toolTipType: ToolTipType.bubble,
