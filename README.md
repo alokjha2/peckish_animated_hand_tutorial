@@ -42,6 +42,30 @@ CustomMaterialIndicator(
 | `tooltipBuilder`     | An optional custom builder for the tooltip, which takes a string as an argument and returns a widget.                                         |
 
 
+
+
+| Parameter            | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| `key`                | A unique key used to identify each showcase item in the tutorial.           |
+| `tooltip`            | An optional `ToolTip` object to display additional information about the showcase item. |
+| `trigger`            | A boolean that indicates whether the item should trigger the tutorial.      |
+| `handAlignment`      | The alignment for the hand when pointing to the showcase item.              |
+| `onAnimationComplete`| A callback function that is triggered when the animation for this showcase item is complete. |
+
+
+| Parameter            | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| `backgroundColor`    | The background color of the tooltip.                                         |
+| `alignment`          | The alignment of the tooltip relative to its target.                         |
+| `padding`            | The padding inside the tooltip.                                              |
+| `enableBorder`       | A boolean that enables or disables the border around the tooltip.            |
+
+| ToolTip Type   | Preview                                                    |
+|-------------|-------------------------------------------------------------------|
+| `bubble`    |  ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)                  |
+| `simple`    |   ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)           |
+
+
 ## Additional information
 
 TODO: Reach out to peckish human in case of any query regarding package or improvement. Email id - peckishhuman@gmail.com
