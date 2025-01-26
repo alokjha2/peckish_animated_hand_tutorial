@@ -20,8 +20,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PeckishHandTutorial(
+    return PeckishHandTutorial(
         toolTip: const ToolTip(
           toolTipType: ToolTipType.bubble,
           toolTipMessage: "This is a button",
@@ -62,7 +61,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }

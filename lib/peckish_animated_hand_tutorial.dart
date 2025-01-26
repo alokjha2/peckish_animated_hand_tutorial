@@ -137,60 +137,62 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        widget.child,
-        AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) => Stack(
-            children: [
-              Positioned(
-                left: _controller.currentOffset.dx,
-                top: _controller.currentOffset.dy,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (widget.haveRippleEffect!)
-                      AnimatedBuilder(
-                        animation: _rippleController,
-                        builder: (context, child) {
-                          return Container(
-                            width: _rippleSizeAnimation.value,
-                            height: _rippleSizeAnimation.value,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: widget.handColor?.withOpacity(_rippleOpacityAnimation.value),
+    return Material(
+      child: Stack(
+        children: [
+          widget.child,
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) => Stack(
+              children: [
+                Positioned(
+                  left: _controller.currentOffset.dx,
+                  top: _controller.currentOffset.dy,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      if (widget.haveRippleEffect!)
+                        AnimatedBuilder(
+                          animation: _rippleController,
+                          builder: (context, child) {
+                            return Container(
+                              width: _rippleSizeAnimation.value,
+                              height: _rippleSizeAnimation.value,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: widget.handColor?.withOpacity(_rippleOpacityAnimation.value),
+                              ),
+                            );
+                          },
+                        ),
+                      SizedBox(
+                              width: widget.handSize,
+                              height: widget.handSize,
+                              child: Image.asset(
+                                widget.handAssetPath ?? 
+                                'packages/peckish_animated_hand_tutorial/assets/animated_hand.png',
+                                color: widget.handColor,
+                                colorBlendMode: BlendMode.modulate,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          );
-                        },
-                      ),
-                    SizedBox(
-                            width: widget.handSize,
-                            height: widget.handSize,
-                            child: Image.asset(
-                              widget.handAssetPath ?? 
-                              'packages/peckish_animated_hand_tutorial/assets/animated_hand.png',
-                              color: widget.handColor,
-                              colorBlendMode: BlendMode.modulate,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-
-                  ],
+      
+                    ],
+                  ),
                 ),
-              ),
-             if (_controller.showTooltip)
-  Positioned(
-    left: _controller.currentOffset.dx + 20,
-    top: _controller.currentOffset.dy + 60,
-    child: widget.tooltipBuilder?.call(_controller.currentTooltip.toolTipMessage!) ??
-        ToolTipWidget(toolTip: _controller.currentTooltip),
-  ),
-
-            ],
-          ),
+               if (_controller.showTooltip)
+        Positioned(
+      left: _controller.currentOffset.dx + 20,
+      top: _controller.currentOffset.dy + 60,
+      child: widget.tooltipBuilder?.call(_controller.currentTooltip.toolTipMessage!) ??
+          ToolTipWidget(toolTip: _controller.currentTooltip),
         ),
-      ],
+      
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
