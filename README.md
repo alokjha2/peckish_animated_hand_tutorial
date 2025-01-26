@@ -3,10 +3,9 @@
 
 <p>
   <a href="https://img.shields.io/badge/License-MIT-green"><img align="center" src="https://img.shields.io/badge/License-MIT-green" alt="MIT License"></a>
-  <a href="https://github.com/Milad-Akarie/smooth_page_indicator/stargazers"><img align="center" src="https://img.shields.io/github/stars/Milad-Akarie/smooth_page_indicator?style=flat&logo=github&colorB=green&label=stars" alt="stars"></a>
+  <a href="https://pub.dev/packages/peckish_animated_hand_tutorial/stargazers"><img align="center" src="https://img.shields.io/github/stars/Milad-Akarie/smooth_page_indicator?style=flat&logo=github&colorB=green&label=stars" alt="stars"></a>
   <a href="https://pub.dev/packages/smooth_page_indicator/versions/1.0.0"><img align="center" src="https://img.shields.io/pub/v/smooth_page_indicator.svg" alt="pub version"></a>
-  <a href="https://www.buymeacoffee.com/miladakarie" target="_blank"><img align="center" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="30px" width="108px"></a>
-  <a href="https://pub.dev/packages/smooth_page_indicator"><img align="center" src="https://img.shields.io/pub/dt/smooth_page_indicator.svg" alt="Downloads"></a>
+
 </p>
 
 
@@ -26,22 +25,21 @@ CustomMaterialIndicator(
   child: child,
 )
 ```
-| Parameter            | Description                                                                                                                                  |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `child`              | The widget that will be wrapped by the tutorial. It can be any widget that you want to show the tutorial for.                               |
-| `items`              | A list of `ShowcaseItem` objects, each representing an item in the tutorial.                                                                 |
-| `controller`         | An optional `ShowcaseController` to control the tutorial manually (e.g., to start or stop the tutorial).                                      |
-| `animationDuration`  | The duration of the animation. Defaults to 3 seconds.                                                                                       |
-| `handAssetPath`      | The asset path to the hand image that will be shown during the tutorial. If not provided, the default hand will be used.                     |
-| `handSize`           | The size of the hand. Defaults to 50.                                                                                                        |
-| `initialDelay`       | An optional delay before the tutorial starts.                                                                                               |
-| `handColor`          | The color of the hand. Defaults to white.                                                                                                   |
-| `haveRippleEffect`   | A boolean flag indicating whether a ripple effect will be shown. Defaults to false.                                                          |
-| `onAnimationComplete`| A callback function that will be triggered when the animation completes.                                                                     |
-| `triggerWhen`        | An optional function that defines when the tutorial should be triggered.                                                                    |
-| `toolTip`            | The tooltip configuration to display in the tutorial. Defaults to an empty tooltip.                                                          |
-| `tooltipBuilder`     | An optional custom builder for the tooltip, which takes a string as an argument and returns a widget.                                         |
-
+| Name                                | Type                                         | Required/Optional            | Default Behaviour       Description                                                                    |
+|-------------------------------------|----------------------------------------------|------------------------------|------------------------------|--------------------------------------------------------------------------------|
+| `child`                             | `Widget`                                     | Required                     |                              | The widget that will be wrapped by the tutorial. It can be any widget that you want to show the tutorial for. |
+| `items`                             | `List<ShowcaseItem>`                         | Required                     |                              | A list of `ShowcaseItem` objects, each representing an item in the tutorial.    |
+| `controller`                        | `ShowcaseController?`                        | Optional                     | `null`                       | An optional `ShowcaseController` to control the tutorial manually.             |
+| `animationDuration`                 | `Duration`                                   | Optional                     | `const Duration(seconds: 3)` | The duration of the animation.                                                 |
+| `handAssetPath`                     | `String?`                                    | Optional                     | `null`                       | The asset path to the hand image that will be shown during the tutorial.       |
+| `handSize`                          | `double?`                                    | Optional                     | `50`                         | The size of the hand.                                                          |
+| `initialDelay`                      | `Duration?`                                  | Optional                     | `null`                       | An optional delay before the tutorial starts.                                  |
+| `handColor`                         | `Color?`                                     | Optional                     | `Colors.white`               | The color of the hand.                                                         |
+| `haveRippleEffect`                  | `bool?`                                      | Optional                     | `false`                      | A boolean flag indicating whether a ripple effect will be shown.              |
+| `onAnimationComplete`               | `Function?`                                  | Optional                     | `null`                       | A callback function that will be triggered when the animation completes.       |
+| `triggerWhen`                       | `Function?`                                  | Optional                     | `null`                       | An optional function that defines when the tutorial should be triggered.       |
+| `toolTip`                           | `ToolTip`                                    | Optional                     | `ToolTip()`                  | The tooltip configuration to display in the tutorial.                          |
+| `tooltipBuilder`                    | `Widget Function(String)?`                   | Optional                     | `null`                       | An optional custom builder for the tooltip, which takes a string and returns a widget. |
 
 ## Additional information
 
