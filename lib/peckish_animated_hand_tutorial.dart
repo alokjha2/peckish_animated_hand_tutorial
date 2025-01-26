@@ -1,4 +1,5 @@
 import 'export.dart';
+import 'package:logger/logger.dart';
 export "export.dart";
 
 class PeckishHandTutorial extends StatefulWidget {
@@ -11,6 +12,7 @@ class PeckishHandTutorial extends StatefulWidget {
   final Duration? initialDelay;
   final Color? handColor;
   final bool? haveRippleEffect;
+  final bool? loop;
   final Function? onAnimationComplete;
   final Function(Function)? triggerWhen;
   final Alignment? initialAlignment;
@@ -34,6 +36,7 @@ class PeckishHandTutorial extends StatefulWidget {
     this.tooltipBuilder,
     this.triggerWhen,
     this.haveRippleEffect = false,
+    this.loop = false,
     this.initiallyHide = false,
     this.initialAlignment = Alignment.bottomRight,
   }) : assert(
@@ -62,7 +65,6 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
     _controller = widget.controller ?? ShowcaseController();
     _controller.setItems(widget.items);
 
-    // Initialize animation controllers
     _animationController = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
@@ -73,7 +75,6 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
       duration: const Duration(milliseconds: 500),
     );
 
-    // Ripple effect animations
     _rippleSizeAnimation = Tween<double>(begin: 1, end: 90).animate(
       CurvedAnimation(parent: _rippleController, curve: Curves.easeOut),
     );
@@ -145,10 +146,9 @@ Offset _getPositionFromKey(GlobalKey key) {
   final position = renderBox.localToGlobal(Offset.zero);
   final handSize = widget.handSize ?? 50.0;
 
-  // Ensure the position is clamped within screen bounds
   final screenSize = MediaQuery.of(context).size;
   return _clampToBounds(
-    Offset(position.dx, position.dy + 20), // Adjust for padding
+    Offset(position.dx, position.dy + 20),
     screenSize,
     handSize,
   );
@@ -173,6 +173,11 @@ void _startAnimationSequence() async {
     _triggerRipple();
     await Future.delayed(_animationController.duration!);
   }
+
+    Logger().wtf("completed!");
+     setState(() {
+      _isTutorialActive = false;
+    });
 }
 
 
@@ -201,8 +206,8 @@ Future<void> _animateToPosition(Offset targetOffset) async {
         _controller.setShowTooltip(true);
       }
     });
-
   await _animationController.forward(from: 0);
+  // Logger().wtf("completed!");
 }
 
   @override
