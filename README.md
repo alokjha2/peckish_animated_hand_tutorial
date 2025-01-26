@@ -13,6 +13,7 @@
 1. [](#)
 1. [](#)
 
+[![](http://flutter-badge.zaynjarvis.com/downloads/{peckish_animated_hand_tutorial})](https://pub.dartlang.org/packages/{peckish_animated_hand_tutorial})
 
 ```dart
 CustomMaterialIndicator(
