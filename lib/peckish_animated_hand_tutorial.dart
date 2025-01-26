@@ -14,7 +14,6 @@ class PeckishHandTutorial extends StatefulWidget {
   final Function? onAnimationComplete;
   final Function? triggerWhen;
   final ToolTip toolTip;
-  // final ToolTip? 
   final Widget Function(String tooltip)? tooltipBuilder;
   
   PeckishHandTutorial({
