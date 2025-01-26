@@ -9,15 +9,38 @@
   <a href="https://pub.dev/packages/smooth_page_indicator"><img align="center" src="https://img.shields.io/pub/dt/smooth_page_indicator.svg" alt="Downloads"></a>
 </p>
 
-TODO: A notification package that allow developers to add rating, mood feedback in their app.
 
-## Features
-
-TODO: Allow developers to add mood, 5 star rating, video, poll in notifications
-
-## Getting started
-
-TODO: Install the flutter, dart, package and just add it and run it
+```dart
+CustomMaterialIndicator(
+  onRefresh: onRefresh, // Your refresh logic
+  backgroundColor: Colors.white,
+  indicatorBuilder: (context, controller) {
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: CircularProgressIndicator(
+        color: Colors.redAccent,
+        value: controller.state.isLoading ? null : math.min(controller.value, 1.0),
+      ),
+    );
+  },
+  child: child,
+)
+```
+| Parameter            | Description                                                                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `child`              | The widget that will be wrapped by the tutorial. It can be any widget that you want to show the tutorial for.                               |
+| `items`              | A list of `ShowcaseItem` objects, each representing an item in the tutorial.                                                                 |
+| `controller`         | An optional `ShowcaseController` to control the tutorial manually (e.g., to start or stop the tutorial).                                      |
+| `animationDuration`  | The duration of the animation. Defaults to 3 seconds.                                                                                       |
+| `handAssetPath`      | The asset path to the hand image that will be shown during the tutorial. If not provided, the default hand will be used.                     |
+| `handSize`           | The size of the hand. Defaults to 50.                                                                                                        |
+| `initialDelay`       | An optional delay before the tutorial starts.                                                                                               |
+| `handColor`          | The color of the hand. Defaults to white.                                                                                                   |
+| `haveRippleEffect`   | A boolean flag indicating whether a ripple effect will be shown. Defaults to false.                                                          |
+| `onAnimationComplete`| A callback function that will be triggered when the animation completes.                                                                     |
+| `triggerWhen`        | An optional function that defines when the tutorial should be triggered.                                                                    |
+| `toolTip`            | The tooltip configuration to display in the tutorial. Defaults to an empty tooltip.                                                          |
+| `tooltipBuilder`     | An optional custom builder for the tooltip, which takes a string as an argument and returns a widget.                                         |
 
 
 ## Additional information
