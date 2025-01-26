@@ -69,9 +69,9 @@ CustomMaterialIndicator(
 | `toolTipAlignment`  | Defines the alignment of the tooltip relative to its target.     |
 | `toolTipTextStyle`  | Defines the text style (e.g., font size, color) for the tooltip message. |
 
-| Parameter           | Description                                                      | Preview |
-|---------------------|--------------------------------------------| ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demoworm.gif?raw=true) |
-| `Touch`             | Represents the ripple effect triggered by touch interaction.| |
+| Parameter           | Description                                                      | Preview                                                                 |
+|---------------------|------------------------------------------------------------------|-------------------------------------------------------------------------|
+| `Touch`             | Represents the ripple effect triggered by touch interaction.     | ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demoworm.gif?raw=true) |
 
 
 | ToolTip Type   | Preview                                                    |
