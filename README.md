@@ -25,6 +25,9 @@ CustomMaterialIndicator(
   child: child,
 )
 ```
+
+### Parameters 
+1. Peckish Hand Tutorial
 | Parameter            | Description                                                                                                                                  |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | `child`              | The widget that will be wrapped by the tutorial. It can be any widget that you want to show the tutorial for.                               |
@@ -41,9 +44,7 @@ CustomMaterialIndicator(
 | `toolTip`            | The tooltip configuration to display in the tutorial. Defaults to an empty tooltip.                                                          |
 | `tooltipBuilder`     | An optional custom builder for the tooltip, which takes a string as an argument and returns a widget.                                         |
 
-
-
-
+2. Showcase Item
 | Parameter            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
 | `key`                | A unique key used to identify each showcase item in the tutorial.           |
@@ -52,7 +53,14 @@ CustomMaterialIndicator(
 | `handAlignment`      | The alignment for the hand when pointing to the showcase item.              |
 | `onAnimationComplete`| A callback function that is triggered when the animation for this showcase item is complete. |
 
+3. ToolTip TextStyle
+| Parameter            | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| `fontColor`          | The color of the text inside the tooltip. Defaults to black.                |
+| `fontSize`           | The font size of the text inside the tooltip. Defaults to 14.0.             |
+| `padding`            | The padding inside the tooltip around the text. Defaults to `EdgeInsets.all(8.0)`. |
 
+# ToolTip Style
 | Parameter            | Description                                                                 |
 |----------------------|-----------------------------------------------------------------------------|
 | `backgroundColor`    | The background color of the tooltip.                                         |
@@ -60,6 +68,7 @@ CustomMaterialIndicator(
 | `padding`            | The padding inside the tooltip.                                              |
 | `enableBorder`       | A boolean that enables or disables the border around the tooltip.            |
 
+### ToolTip 
 | Parameter           | Description                                                       |
 |---------------------|-------------------------------------------------------------------|
 | `toolTipMessage`    | A message displayed within the tooltip.                           |
@@ -69,11 +78,12 @@ CustomMaterialIndicator(
 | `toolTipAlignment`  | Defines the alignment of the tooltip relative to its target.     |
 | `toolTipTextStyle`  | Defines the text style (e.g., font size, color) for the tooltip message. |
 
-| Parameter           | Description                                                      | Preview                                                                 |
+5. ToolTip Touch Type
+| Touch Type         | Description                                                      | Preview                                                                 |
 |---------------------|------------------------------------------------------------------|-------------------------------------------------------------------------|
 | `Touch`             | Represents the ripple effect triggered by touch interaction.     | ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demoworm.gif?raw=true) |
 
-
+6. ToolTip Type
 | ToolTip Type   | Preview                                                    |
 |-------------|-------------------------------------------------------------------|
 | `bubble`    |  ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)                  |
