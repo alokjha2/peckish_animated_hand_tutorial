@@ -27,7 +27,6 @@ class HomeScreen extends StatelessWidget {
           toolTipMessage: "This is a button",
           toolTipStyle: ToolTipStyle(
             backgroundColor: Colors.blue,
-            // textColor: Colors.white,
           ),
         ),
         haveRippleEffect: true,
@@ -36,11 +35,11 @@ class HomeScreen extends StatelessWidget {
           ShowcaseItem(
 
             key: buttonKey,
-            tooltip: ToolTip(toolTipMessage: "button"),
+            tooltip: const ToolTip(toolTipMessage: "button"),
           ),
           ShowcaseItem(
             key: menuKey,
-            tooltip: ToolTip(
+            tooltip: const ToolTip(
               toolTipType: ToolTipType.bubble,
               toolTipMessage: "drawer", toolTipStyle: ToolTipStyle()),
           ),

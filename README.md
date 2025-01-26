@@ -16,7 +16,7 @@
 
 ```dart
 CustomMaterialIndicator(
-  onRefresh: onRefresh, // Your refresh logic
+  onRefresh: onRefresh, 
   backgroundColor: Colors.white,
   indicatorBuilder: (context, controller) {
     return Padding(

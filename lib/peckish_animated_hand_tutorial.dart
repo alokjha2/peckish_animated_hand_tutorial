@@ -165,15 +165,17 @@ class _PeckishHandTutorialState extends State<PeckishHandTutorial> with TickerPr
                         },
                       ),
                     SizedBox(
-                      width: widget.handSize,
-                      height: widget.handSize,
-                      child: Image.asset(
-                        widget.handAssetPath ?? "assets/animated_hand.png",
-                        color: widget.handColor,
-                        colorBlendMode: BlendMode.modulate,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                            width: widget.handSize,
+                            height: widget.handSize,
+                            child: Image.asset(
+                              widget.handAssetPath ?? 
+                              'packages/peckish_animated_hand_tutorial/assets/animated_hand.png',
+                              color: widget.handColor,
+                              colorBlendMode: BlendMode.modulate,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+
                   ],
                 ),
               ),
