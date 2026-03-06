@@ -1,132 +1,207 @@
-### Peckish Animated Hand Tutorial
-
+# Peckish Animated Hand Tutorial
 
 <p>
   <a href="https://img.shields.io/badge/License-MIT-green"><img align="center" src="https://img.shields.io/badge/License-MIT-green" alt="MIT License"></a>
-  <a href="https://pub.dev/packages/peckish_animated_hand_tutorial/stargazers"><img align="center" src="https://img.shields.io/github/stars/Milad-Akarie/smooth_page_indicator?style=flat&logo=github&colorB=green&label=stars" alt="stars"></a>
-  <a href="https://pub.dev/packages/smooth_page_indicator/versions/1.0.0"><img align="center" src="https://img.shields.io/pub/v/smooth_page_indicator.svg" alt="pub version"></a>
-
+  <a href="https://pub.dev/packages/peckish_animated_hand_tutorial/stargazers"><img align="center" src="https://img.shields.io/pub/v/peckish_animated_hand_tutorial.svg" alt="pub version"></a>
 </p>
 
+This package guides users through in-app tutorials by animating a hand that points at widgets, surfaces a themed tooltip, and optionally adds ripple feedback. It ships with a default hand asset but lets you override every aspect of the animation, tooltip, and start/end behavior using `ShowcaseItem`, `ToolTip`, and `ShowcaseController`.
+
 ## Table of Contents
+1. [Installation](#installation)
+1. [Quick start](#quick-start)
+1. [Configuration reference](#configuration-reference)
+   1. [PeckishHandTutorial widget](#peckishhandtutorial-widget)
+   1. [ShowcaseItem](#showcaseitem)
+   1. [ToolTip](#tooltip)
+   1. [ToolTipStyle and ToolTipTextStyle](#tool-tip-style-and-tool-tip-text-style)
+   1. [ToolTipType](#tooltiptype)
+1. [Controllers](#controllers)
+1. [Customization notes](#customization-notes)
+1. [Example](#example)
+1. [Assets](#assets)
+1. [Development & testing](#development--testing)
+1. [Contact & contributions](#contact--contributions)
+1. [License](#license)
 
-1. [](#)
-1. [](#)
+## Installation
 
-[![](http://flutter-badge.zaynjarvis.com/downloads/{peckish_animated_hand_tutorial})](https://pub.dartlang.org/packages/{peckish_animated_hand_tutorial})
+Add the package to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  peckish_animated_hand_tutorial: ^1.0.2
+  logger: ^1.0.0 # logger is re-exported by the package
+```
+
+Run `flutter pub get`. The package requires Flutter SDK `>=1.17.0` and Dart `>=3.3.4`.
+
+### Assets
+
+The widget defaults to the bundled asset at `packages/peckish_animated_hand_tutorial/assets/animated_hand.png`. Provide your own via `handAssetPath` and declare it in your app’s `flutter/assets` list if you want a branded hand animation instead of the built-in image.
+
+## Quick start
 
 ```dart
-CustomMaterialIndicator(
-  onRefresh: onRefresh, 
-  backgroundColor: Colors.white,
-  indicatorBuilder: (context, controller) {
-    return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: CircularProgressIndicator(
-        color: Colors.redAccent,
-        value: controller.state.isLoading ? null : math.min(controller.value, 1.0),
+PeckishHandTutorial(
+  child: Scaffold(
+    appBar: AppBar(title: const Text('Demo')),
+    body: Center(
+      child: ElevatedButton(
+        key: buttonKey,
+        onPressed: () {},
+        child: const Text('Start tutorial'),
       ),
-    );
-  },
-  child: child,
+    ),
+  ),
+  items: [
+    ShowcaseItem(
+      key: buttonKey,
+      tooltip: const ToolTip(
+        toolTipMessage: 'Tap here to begin',
+        toolTipType: ToolTipType.bubble,
+        toolTipStyle: ToolTipStyle(backgroundColor: Colors.blue),
+      ),
+    ),
+  ],
 )
 ```
 
-### Parameters 
+Highlights:
 
-### Properties of `Peckish Hand Tutorial` : 
-| Parameter            | Description                                                                                                                                  |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `child`              | The widget that will be wrapped by the tutorial. It can be any widget that you want to show the tutorial for.                               |
-| `items`              | A list of `ShowcaseItem` objects, each representing an item in the tutorial.                                                                 |
-| `controller`         | An optional `ShowcaseController` to control the tutorial manually (e.g., to start or stop the tutorial).                                      |
-| `animationDuration`  | The duration of the animation. Defaults to 3 seconds.                                                                                       |
-| `handAssetPath`      | The asset path to the hand image that will be shown during the tutorial. If not provided, the default hand will be used.                     |
-| `handSize`           | The size of the hand. Defaults to 50.                                                                                                        |
-| `initialDelay`       | An optional delay before the tutorial starts.                                                                                               |
-| `handColor`          | The color of the hand. Defaults to white.                                                                                                   |
-| `haveRippleEffect`   | A boolean flag indicating whether a ripple effect will be shown. Defaults to false.                                                          |
-| `onAnimationComplete`| A callback function that will be triggered when the animation completes.                                                                     |
-| `triggerWhen`        | An optional function that defines when the tutorial should be triggered.                                                                    |
-| `toolTip`            | The tooltip configuration to display in the tutorial. Defaults to an empty tooltip.                                                          |
-| `tooltipBuilder`     | An optional custom builder for the tooltip, which takes a string as an argument and returns a widget.                                         |
+- Animated hand follows each `ShowcaseItem` in order and clamps to the screen bounds.
+- Default tooltip renderer (`ToolTipWidget`) supports `bubble`, `simple`, and a custom `cloud` shape.
+- Ripple effect, hand size/color/asset, and tooltip builder are all configurable.
+- You can delay or gate startup, and you always get access to the `ShowcaseController` if you prefer to drive the animation externally.
 
-### Showcase Item
-| Parameter            | Description                                                                 |
-|----------------------|-----------------------------------------------------------------------------|
-| `key`                | A unique key used to identify each showcase item in the tutorial.           |
-| `tooltip`            | An optional `ToolTip` object to display additional information about the showcase item. |
-| `trigger`            | A boolean that indicates whether the item should trigger the tutorial.      |
-| `handAlignment`      | The alignment for the hand when pointing to the showcase item.              |
-| `onAnimationComplete`| A callback function that is triggered when the animation for this showcase item is complete. |
+## Configuration reference
 
-### ToolTip TextStyle
-| Parameter            | Description                                                                 |
-|----------------------|-----------------------------------------------------------------------------|
-| `fontColor`          | The color of the text inside the tooltip. Defaults to black.                |
-| `fontSize`           | The font size of the text inside the tooltip. Defaults to 14.0.             |
-| `padding`            | The padding inside the tooltip around the text. Defaults to `EdgeInsets.all(8.0)`. |
+### PeckishHandTutorial widget
 
-### ToolTip Style
-| Parameter            | Description                                                                 |
-|----------------------|-----------------------------------------------------------------------------|
-| `backgroundColor`    | The background color of the tooltip.                                         |
-| `alignment`          | The alignment of the tooltip relative to its target.                         |
-| `padding`            | The padding inside the tooltip.                                              |
-| `enableBorder`       | A boolean that enables or disables the border around the tooltip.            |
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `child` | `Widget` | — | The widget tree that hosts the tutorial. The hand and tooltips are stacked on top of this widget. |
+| `items` | `List<ShowcaseItem>` | — | Ordered list of targets for the animated hand. Each item must supply a `GlobalKey`. |
+| `controller` | `ShowcaseController?` | `null` | Optional controller to inspect or control the current offset, tooltip state, etc. Without one the widget creates an internal controller. |
+| `animationDuration` | `Duration` | `Duration(seconds: 3)` | Duration for each hand animation segment. |
+| `handAssetPath` | `String?` | `null` | Asset path to your hand image. Defaults to the packaged asset. |
+| `handSize` | `double?` | `50` | Diameter of the rendered hand graphic. |
+| `initialDelay` | `Duration?` | `null` | Present in the API but not read anywhere in the implementation yet. |
+| `handColor` | `Color?` | `Colors.white` | Color blended on top of the hand asset. |
+| `haveRippleEffect` | `bool?` | `false` | When `true`, a ripple expands from the hand during each animation cycle. |
+| `loop` | `bool?` | `false` | Not currently consumed; reserved for future loops through `items`. |
+| `onAnimationComplete` | `Function?` | `null` | Exists for future callbacks when the entire tutorial finishes but is not invoked yet. |
+| `triggerWhen` | `Function(Function startTutorial)?` | `null` | Receives a callback that starts the animation on demand. Needed if `initiallyHide` is `true`. |
+| `initialAlignment` | `Alignment?` | `Alignment.bottomRight` | Starting position for the hand before it reaches the first `ShowcaseItem`. |
+| `initiallyHide` | `bool?` | `false` | Keeps the hand hidden until `triggerWhen` calls its received starter callback. Asserts that `triggerWhen` is provided when set to `true`. |
+| `toolTip` | `ToolTip` | `const ToolTip()` | Defaults for tooltips shown when the hand reaches a target. |
+| `tooltipBuilder` | `Widget Function(String tooltip)?` | `null` | Build your own tooltip widget. If not supplied the widget renders `ToolTipWidget`. |
 
-### ToolTip 
-| Parameter           | Description                                                       |
-|---------------------|-------------------------------------------------------------------|
-| `toolTipMessage`    | A message displayed within the tooltip.                           |
-| `toolTipType`       | Defines the type of tooltip (e.g., `bubble`, `simple`).           |
-| `onTooltipTap`      | A function that is triggered when the tooltip is tapped.          |
-| `toolTipStyle`      | Defines the style (e.g., background color, padding) of the tooltip. |
-| `toolTipAlignment`  | Defines the alignment of the tooltip relative to its target.     |
-| `toolTipTextStyle`  | Defines the text style (e.g., font size, color) for the tooltip message. |
+### ShowcaseItem
 
-### ToolTip Touch Type
-| Touch Type         | Description                                                      | Preview                                                                 |
-|---------------------|------------------------------------------------------------------|-------------------------------------------------------------------------|
-| `Touch`             | Represents the ripple effect triggered by touch interaction.     | ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demoworm.gif?raw=true) |
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `key` | `GlobalKey` | — | Identifies the target render object. The hand positions itself based on this key. |
+| `tooltip` | `ToolTip?` | `null` | Tooltip data that overwrites the parent `toolTip` defaults when present. |
+| `trigger` | `bool?` | `null` | Exposed by the model but not read in the current animation pipeline. |
+| `handAlignment` | `Alignment?` | `null` | Intended to control the hand’s alignment per item; not yet used. |
+| `onAnimationComplete` | `Function?` | `null` | Placeholder for future per-item completion callbacks. |
 
-### ToolTip Type
-| ToolTip Type   | Preview                                                    |
-|-------------|-------------------------------------------------------------------|
-| `bubble`    |  ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)                  |
-| `simple`    |   ![](https://github.com/Milad-Akarie/smooth_page_indicator/blob/master/demo/worm.gif?raw=true)           |
+### ToolTip
 
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `toolTipMessage` | `String?` | `null` | Text shown inside the tooltip bubble. |
+| `toolTipType` | `ToolTipType?` | `null` | Controls which tooltip painter is used by `ToolTipWidget`. |
+| `onTooltipTap` | `Function?` | `null` | Present for future tap handling but not wired yet. |
+| `toolTipStyle` | `ToolTipStyle?` | `null` | Custom style (background color, padding, border flag). Currently only `backgroundColor` is applied by the widget. |
+| `toolTipAlignment` | `Alignment?` | `null` | Stored for future alignment-based placement. |
+| `toolTipTextStyle` | `ToolTipTextStyle?` | `null` | Allows you to supply font settings, but the default tooltip widget currently uses fixed `TextStyle` values. |
 
+### Tool Tip Style and Tool Tip Text Style
 
-## Additional information
+#### ToolTipStyle
 
-TODO: Reach out to peckish human in case of any query regarding package or improvement. Email id - peckishhuman@gmail.com
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `backgroundColor` | `Color` | `Colors.white` | Background fill of the tooltip. |
+| `alignment` | `Alignment` | `Alignment.bottomCenter` | Reserved for future placement logic. |
+| `padding` | `EdgeInsets` | `EdgeInsets.all(8.0)` | Reported padding; tooling currently ignores it. |
+| `enableBorder` | `bool` | `false` | Intended to toggle borders but not referenced yet. |
 
-## Main Contributors
+#### ToolTipTextStyle
 
-<table>
-  <tr>
-     <td align="center"><a href="https://github.com/alokjha2"><img src="https://avatars.githubusercontent.com/u/88707242?s=100" width="100px;" alt=""/><br /><sub><b>Peckish Human</b></sub></a></td>
-  </tr>
-</table>
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `fontColor` | `Color` | `Colors.black` | Text color (currently unused). |
+| `fontSize` | `double` | `14.0` | Font size (currently unused). |
+| `padding` | `EdgeInsets` | `EdgeInsets.all(8.0)` | Declarative padding unit (not applied). |
 
-2. Commit statements guideline : 
-- Bug Fixes
-Commit Statement: fix: resolve issue with user login
+### ToolTipType
 
-- Feature Added
-Commit Statement: feat: add user profile page
+| Value | Description |
+| --- | --- |
+| `ToolTipType.bubble` | Rounded capsule with shadow and border produced by `_buildBubbleTooltip()`. |
+| `ToolTipType.simple` | Simple bubble with border created by `_buildSimpleTooltip()`. |
+| `ToolTipType.cloud` | Custom-painted “cloud” shape rendered by `CloudBorderPainter`. |
 
-- Refactoring Existing Code
-Commit Statement: refactor: simplify user authentication logic
+When you supply `toolTipType`, `ToolTipWidget` selects the corresponding builder. If you opt-in via `tooltipBuilder`, you can render anything instead.
 
-- Updating Documentation
-Commit Statement: docs: update README with installation instructions
+## Controllers
 
-- Performance Improvements
-Commit Statement: perf: optimize image loading for faster rendering
+`ShowcaseController` extends `ChangeNotifier` and synchronizes the hand animation with the tooltip display. Access it via the `controller` parameter or use the internal controller exposed through `PeckishHandTutorial`.
 
-- Chore (Non-Feature Changes)
-Commit Statement: chore: update dependencies to latest versions
+| Member | Type | Description |
+| --- | --- | --- |
+| `items` | `List<ShowcaseItem>` | Current item list. Mutating this list manually requires following `List` semantics; use `setItems` to replace it atomically. |
+| `isPlaying` | `bool` | Flag toggled whenever the controller cycles through `_currentIndex` (not currently updated by the widget). |
+| `currentOffset` | `Offset` | Current hand position (updated from `_animateToPosition`). |
+| `showTooltip` | `bool` | Controls whether the tooltip container is painted. |
+| `currentTooltip` | `ToolTip` | Returns the tooltip of the current item or a fallback with message “No tooltip available”. |
+| `addItem(ShowcaseItem item)` | — | Appends an item and notifies listeners. |
+| `setItems(List<ShowcaseItem> items)` | — | Clears and replaces the entire item list. |
+| `updateOffset(Offset offset)` | — | Updates `currentOffset` during animation frames. |
+| `setShowTooltip(bool show)` | — | Toggles `showTooltip`. |
+| `next()` | — | Advances `_currentIndex` if not at the end. |
+| `reset()` | — | Resets `_currentIndex`, hides the tooltip, and sets the offset to `Offset.zero`. |
 
+## Customization notes
 
+- **Custom tooltips**: Provide `tooltipBuilder` to draw your own widget. The default `ToolTipWidget` uses the `ToolTipType` enum to pick between `_buildBubbleTooltip`, `_buildSimpleTooltip`, and `_buildCloudTooltip`, and it paints the `toolTipMessage` text using hard-coded `TextStyle` values.
+- **Ripple effect**: Set `haveRippleEffect` to `true` to emit a growing circle behind the hand (`_rippleController` drives size/opacity). The ripple color is derived from `handColor`.
+- **Hand appearance**: Override `handAssetPath`, `handSize`, and `handColor` to match your brand. The default image is tinted with `BlendMode.modulate`.
+- **Startup control**: Use `initialAlignment` to place the hand before it targets the first item. Pass `initiallyHide: true` along with `triggerWhen` to start the sequence manually. `triggerWhen` receives a `Function` callback you invoke once your UI is ready. The hand clamps the animation to the screen bounds so targets near the edge stay visible.
+- **Unimplemented parameters**: `loop`, `initialDelay`, `onAnimationComplete`, `ShowcaseItem.trigger`, `ShowcaseItem.handAlignment`, and `ToolTip`/style alignment/padding hooks are exposed but not consumed in the current implementation; treat them as reserved for future releases.
+
+## Example
+
+See `example/lib/main.dart` for a working demo. The app wires two `ShowcaseItem`s to a button and a menu icon and shows how to:
+
+1. Provide `GlobalKey`s for target widgets.
+1. Supply a custom `ToolTip` for each item.
+1. Enable ripple feedback and tint the hand green.
+
+Run the demo with:
+
+```bash
+cd example
+flutter run
+```
+
+## Assets
+
+- `assets/animated_hand.png` &rarr; default asset shipped with the package. Refer to it through `handAssetPath` if you copy it into your app.
+- If you supply a different asset, remember to register it under your top-level `flutter/assets` block.
+
+## Development & testing
+
+- `flutter test` — verify unit/widgets.
+- `flutter analyze` — static analysis powered by `flutter_lints`.
+
+## Contact & contributions
+
+Questions, requests, or PR ideas? Email peckishhuman@gmail.com or open an issue at `https://github.com/alokjha2/peckish_animated_hand_tutorial/issues`.
+
+## License
+
+MIT © Peckish Human
