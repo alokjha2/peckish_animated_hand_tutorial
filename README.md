@@ -38,7 +38,7 @@ Run `flutter pub get`. The package requires Flutter SDK `>=1.17.0` and Dart `>=3
 
 ### Assets
 
-The widget defaults to the bundled asset at `packages/peckish_animated_hand_tutorial/assets/animated_hand.png`. Provide your own via `handAssetPath` and declare it in your app’s `flutter/assets` list if you want a branded hand animation instead of the built-in image.
+The widget defaults to the bundled asset at `packages/peckish_animated_hand_tutorial/assets/animated_hand.png`. Provide your own via `handAssetPath` and declare it in your app's `flutter/assets` list if you want a branded hand animation instead of the built-in image.
 
 ## Quick start
 
@@ -80,8 +80,8 @@ Highlights:
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `child` | `Widget` | — | The widget tree that hosts the tutorial. The hand and tooltips are stacked on top of this widget. |
-| `items` | `List<ShowcaseItem>` | — | Ordered list of targets for the animated hand. Each item must supply a `GlobalKey`. |
+| `child` | `Widget` | - | The widget tree that hosts the tutorial. The hand and tooltips are stacked on top of this widget. |
+| `items` | `List<ShowcaseItem>` | - | Ordered list of targets for the animated hand. Each item must supply a `GlobalKey`. |
 | `controller` | `ShowcaseController?` | `null` | Optional controller to inspect or control the current offset, tooltip state, etc. Without one the widget creates an internal controller. |
 | `animationDuration` | `Duration` | `Duration(seconds: 3)` | Duration for each hand animation segment. |
 | `handAssetPath` | `String?` | `null` | Asset path to your hand image. Defaults to the packaged asset. |
@@ -101,10 +101,10 @@ Highlights:
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `key` | `GlobalKey` | — | Identifies the target render object. The hand positions itself based on this key. |
+| `key` | `GlobalKey` | - | Identifies the target render object. The hand positions itself based on this key. |
 | `tooltip` | `ToolTip?` | `null` | Tooltip data that overwrites the parent `toolTip` defaults when present. |
 | `trigger` | `bool?` | `null` | Exposed by the model but not read in the current animation pipeline. |
-| `handAlignment` | `Alignment?` | `null` | Intended to control the hand’s alignment per item; not yet used. |
+| `handAlignment` | `Alignment?` | `null` | Intended to control the hand's alignment per item; not yet used. |
 | `onAnimationComplete` | `Function?` | `null` | Placeholder for future per-item completion callbacks. |
 
 ### ToolTip
@@ -143,7 +143,7 @@ Highlights:
 | --- | --- |
 | `ToolTipType.bubble` | Rounded capsule with shadow and border produced by `_buildBubbleTooltip()`. |
 | `ToolTipType.simple` | Simple bubble with border created by `_buildSimpleTooltip()`. |
-| `ToolTipType.cloud` | Custom-painted “cloud” shape rendered by `CloudBorderPainter`. |
+| `ToolTipType.cloud` | Custom-painted cloud shape rendered by `CloudBorderPainter`. |
 
 When you supply `toolTipType`, `ToolTipWidget` selects the corresponding builder. If you opt-in via `tooltipBuilder`, you can render anything instead.
 
@@ -157,13 +157,13 @@ When you supply `toolTipType`, `ToolTipWidget` selects the corresponding builder
 | `isPlaying` | `bool` | Flag toggled whenever the controller cycles through `_currentIndex` (not currently updated by the widget). |
 | `currentOffset` | `Offset` | Current hand position (updated from `_animateToPosition`). |
 | `showTooltip` | `bool` | Controls whether the tooltip container is painted. |
-| `currentTooltip` | `ToolTip` | Returns the tooltip of the current item or a fallback with message “No tooltip available”. |
-| `addItem(ShowcaseItem item)` | — | Appends an item and notifies listeners. |
-| `setItems(List<ShowcaseItem> items)` | — | Clears and replaces the entire item list. |
-| `updateOffset(Offset offset)` | — | Updates `currentOffset` during animation frames. |
-| `setShowTooltip(bool show)` | — | Toggles `showTooltip`. |
-| `next()` | — | Advances `_currentIndex` if not at the end. |
-| `reset()` | — | Resets `_currentIndex`, hides the tooltip, and sets the offset to `Offset.zero`. |
+| `currentTooltip` | `ToolTip` | Returns the tooltip of the current item or a fallback with message "No tooltip available". |
+| `addItem(ShowcaseItem item)` | - | Appends an item and notifies listeners. |
+| `setItems(List<ShowcaseItem> items)` | - | Clears and replaces the entire item list. |
+| `updateOffset(Offset offset)` | - | Updates `currentOffset` during animation frames. |
+| `setShowTooltip(bool show)` | - | Toggles `showTooltip`. |
+| `next()` | - | Advances `_currentIndex` if not at the end. |
+| `reset()` | - | Resets `_currentIndex`, hides the tooltip, and sets the offset to `Offset.zero`. |
 
 ## Customization notes
 
@@ -195,8 +195,8 @@ flutter run
 
 ## Development & testing
 
-- `flutter test` — verify unit/widgets.
-- `flutter analyze` — static analysis powered by `flutter_lints`.
+- `flutter test` - verify unit/widgets.
+- `flutter analyze` - static analysis powered by `flutter_lints`.
 
 ## Contact & contributions
 
@@ -204,4 +204,4 @@ Questions, requests, or PR ideas? Email peckishhuman@gmail.com or open an issue 
 
 ## License
 
-MIT © Peckish Human
+MIT (c) Peckish Human
