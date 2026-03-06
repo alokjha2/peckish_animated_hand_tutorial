@@ -12,5 +12,12 @@
 ### Fixed
 - Resolved an issue with loading the default hand asset in external projects.
 
+
+## [1.0.3] - 2026-03-06
+### Fixed
+- Updated readme
+
+
+
 ### Added 
 - Readme 
